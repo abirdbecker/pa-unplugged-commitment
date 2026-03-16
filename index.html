@@ -732,16 +732,17 @@
     }
 
     function loadFamilies() {
-      fetch('https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET + '/values/Responses!A:Z?key=' + SHEETS_KEY)
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (!data.values || data.values.length < 2) {
+      // Use CSV export — works from any domain, no API key or referrer restrictions needed
+      var url = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET + '/gviz/tq?tqx=out:csv&sheet=Responses';
+      fetch(url)
+        .then(function(r) { return r.text(); })
+        .then(function(csv) {
+          var rows = parseCSV(csv);
+          if (rows.length < 2) {
             document.getElementById('familiesLoading').textContent = 'No family data yet.';
             return;
           }
-          var headers = data.values[0];
-          var rows    = data.values.slice(1);
-          allFamilies = processFamilies(headers, rows);
+          allFamilies = processFamilies(rows[0], rows.slice(1));
           document.getElementById('familiesLoading').remove();
           buildDistrictFilter(allFamilies);
           filterFamilies();
@@ -749,6 +750,28 @@
         .catch(function() {
           document.getElementById('familiesLoading').textContent = 'Could not load families data.';
         });
+    }
+
+    function parseCSV(text) {
+      var rows = [];
+      text.split('\n').forEach(function(line) {
+        if (!line.trim()) return;
+        var cells = [], cell = '', inQuote = false;
+        for (var i = 0; i < line.length; i++) {
+          var ch = line[i];
+          if (ch === '"') {
+            if (inQuote && line[i + 1] === '"') { cell += '"'; i++; }
+            else inQuote = !inQuote;
+          } else if (ch === ',' && !inQuote) {
+            cells.push(cell); cell = '';
+          } else {
+            cell += ch;
+          }
+        }
+        cells.push(cell);
+        rows.push(cells);
+      });
+      return rows;
     }
 
     function processFamilies(headers, rows) {
