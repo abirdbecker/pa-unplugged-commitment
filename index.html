@@ -517,7 +517,7 @@
 
     var SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwERe9IlBqYO1xCxkCJXET23Gu4WosBqu1RQoNJDm8Nn5_8W3awfpUu8dsbVlEivsz-/exec';
     var SHEETS_KEY   = 'AIzaSyDmPvagKEGJc9wdprbVgrkwp34Gq0-fweM';
-    var SPREADSHEET  = '1w4ogCUwVc15lYZxOeUPA--y7LPnW8T6h5u_2-624B9I';
+    var SPREADSHEET  = '1sDRDh9ZFQ6bhDp_wEJGczd-qvG01uYYE';
 
     var childCount = 0;
     var allFamilies = [];
@@ -775,13 +775,11 @@
     }
 
     function processFamilies(headers, rows) {
-      var nameIdx     = headers.findIndex(function(h) { return /parent.*name/i.test(h); });
-      var publicIdx   = headers.findIndex(function(h) { return /public.?name/i.test(h); });
-      // New format: children stored as JSON array in one column
+      var nameIdx     = headers.findIndex(function(h) { return /parent.*guardian.*name|parent.*name/i.test(h); });
+      var publicIdx   = headers.findIndex(function(h) { return /public.*name/i.test(h); });
       var childrenIdx = headers.findIndex(function(h) { return /^children$/i.test(h); });
-      // Old format: district and year stored in separate columns
-      var districtIdx = headers.findIndex(function(h) { return /district/i.test(h); });
-      var yearIdx     = headers.findIndex(function(h) { return /grad/i.test(h); });
+      var districtIdx = headers.findIndex(function(h) { return /^district$/i.test(h); });
+      var yearIdx     = headers.findIndex(function(h) { return /graduation.*year/i.test(h); });
 
       var map = new Map(), anon = [], anonCount = 0;
       rows.forEach(function(row) {
