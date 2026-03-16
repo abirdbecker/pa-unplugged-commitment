@@ -634,17 +634,19 @@
     }
 
     // ── Families directory ───────────────────────────────────────────────
-    function buildDistrictFilter() {
+    function buildDistrictFilter(families) {
       var el = document.getElementById('districtFilter');
-      Object.keys(PA_DISTRICTS).sort().forEach(function(county) {
-        var group = document.createElement('optgroup');
-        group.label = county + ' County';
-        PA_DISTRICTS[county].forEach(function(d) {
-          var opt = document.createElement('option');
-          opt.value = d; opt.textContent = d;
-          group.appendChild(opt);
-        });
-        el.appendChild(group);
+      // Collect only districts that have at least one signer
+      var seen = new Set();
+      families.forEach(function(f) {
+        f.children.forEach(function(c) { if (c.district) seen.add(c.district); });
+      });
+      var districts = Array.from(seen).sort();
+      el.innerHTML = '<option value="">Select a District</option>';
+      districts.forEach(function(d) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        el.appendChild(opt);
       });
     }
 
@@ -697,6 +699,7 @@
           var rows    = data.values.slice(1);
           allFamilies = processFamilies(headers, rows);
           document.getElementById('familiesLoading').remove();
+          buildDistrictFilter(allFamilies);
           filterFamilies();
         })
         .catch(function() {
@@ -733,7 +736,6 @@
 
     // ── Init ─────────────────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
-      buildDistrictFilter();
       addChild(); // Start with one child
       loadFamilies();
     });
