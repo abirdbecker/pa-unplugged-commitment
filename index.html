@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign the Commitment — PA Unplugged</title>
+  <meta name="description" content="Join thousands of Pennsylvania families committing to delay smartphones and social media for kids." />
+  <meta property="og:title" content="Sign the PA Unplugged Commitment" />
+  <meta property="og:description" content="Join thousands of Pennsylvania families committing to delay smartphones and social media for kids." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sign.paunplugged.org" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f1ec;
+      color: #222;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .page-header {
+      background: #385F25;
+      color: white;
+      text-align: center;
+      padding: 2.5rem 1.5rem 2rem;
+    }
+    .page-header .logo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+    .page-header p {
+      font-size: 1rem;
+      opacity: 0.9;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* Layout */
+    .page-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    /* Form card */
+    .form-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 2rem 2rem;
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 0.4rem;
+    }
+    .form-text {
+      display: block;
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 13px;
+      font-size: 15px;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      background: #fff;
+      color: #222;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: auto;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #385F25;
+      box-shadow: 0 0 0 3px rgba(56,95,37,0.15);
+    }
+    select:disabled {
+      background: #f5f5f5;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+    textarea { resize: vertical; }
+
+    /* Checkboxes / radios */
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .form-check input[type="checkbox"],
+    .form-check input[type="radio"] {
+      width: auto;
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: #385F25;
+    }
+    .form-check label {
+      font-weight: 400;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 0;
+    }
+    .radio-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+    /* Section divider */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #385F25;
+      margin: 1.75rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    /* Child entries */
+    .child-entry {
+      background: #f9f9f7;
+      border: 1px solid #e2e2e2;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 0.875rem;
+    }
+    .child-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .child-header h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #385F25;
+      margin: 0;
+    }
+    .remove-child {
+      font-size: 13px;
+      color: #999;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .remove-child:hover { color: #c00; }
+
+    /* Two-column layout for county/district */
+    .county-district-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 480px) {
+      .county-district-row { grid-template-columns: 1fr; }
+    }
+
+    /* Buttons */
+    .btn-add-child {
+      background: white;
+      border: 1px dashed #aaa;
+      color: #555;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 0.25rem;
+      width: 100%;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-add-child:hover { border-color: #385F25; color: #385F25; }
+
+    .btn-submit {
+      width: 100%;
+      background: #385F25;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #2d4d1e; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      background: #eaf4e5;
+      border: 1px solid #a8d49a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .success-msg h3 { color: #385F25; margin-bottom: 0.5rem; }
+    .success-msg p { font-size: 14px; color: #555; }
+
+    /* Families directory */
+    .families-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .families-section h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .families-section > p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+    .filter-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 480px) { .filter-row { grid-template-columns: 1fr; } }
+
+    .family-list { min-height: 60px; }
+    .family-row {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .family-row:last-child { border-bottom: none; }
+    .family-name { font-weight: 600; font-size: 14px; }
+    .family-detail { font-size: 13px; color: #777; margin-top: 1px; }
+    .families-prompt {
+      font-size: 14px;
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+    .families-loading { font-size: 14px; color: #999; text-align: center; padding: 1.5rem 0; }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .page-footer a { color: #385F25; }
+
+    @media (max-width: 600px) {
+      .form-card, .families-section { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="logo">PA Unplugged</div>
+    <h1>Sign the Commitment</h1>
+    <p>Join families across Pennsylvania committing to delay smartphones and social media — and to support phone-free schools.</p>
+  </header>
+
+  <div class="page-body">
+
+    <div class="form-card">
+      <form id="commitmentForm">
+
+        <div class="form-group">
+          <label for="parentName">Parent/Guardian Name(s)</label>
+          <span class="form-text">How your name will appear on paunplugged.org — e.g. "Jenn and Matt Jones" or "Simpson Family"</span>
+          <input type="text" id="parentName" name="parentName" placeholder="Enter your name(s)" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <input type="checkbox" id="supporter" name="supporter" onchange="toggleSupporter()" />
+            <label for="supporter">My children are grown / I do not have children / my children already have a smartphone — but I support bell-to-bell phone-free schools!</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Is it okay if your name appears on the PA Unplugged website?</label>
+          <div class="radio-group">
+            <div class="form-check">
+              <input type="radio" id="publicYes" name="publicName" value="yes" required />
+              <label for="publicYes">Yes</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="publicNo" name="publicName" value="no" />
+              <label for="publicNo">No, keep me anonymous</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="childrenSection">
+          <div class="section-label">Your Children</div>
+          <div id="childrenContainer"></div>
+          <button type="button" class="btn-add-child" onclick="addChild()">+ Add Another Child</button>
+        </div>
+
+        <div class="form-group" style="margin-top:1.5rem">
+          <label for="comments">Additional Comments or Questions <span style="font-weight:400;color:#999">(optional)</span></label>
+          <textarea id="comments" name="comments" rows="3" placeholder="Share any thoughts or questions"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Would you like to be added to a community email list for updates and support?</label>
+          <div class="radio-group">
+            <div class="form-check">
+              <input type="radio" id="emailYes" name="emailList" value="yes" required />
+              <label for="emailYes">Yes</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="emailNo" name="emailList" value="no" />
+              <label for="emailNo">No</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitCommitment()">Sign the Commitment</button>
+
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <h3>Thank you for signing!</h3>
+        <p>Your commitment has been recorded. Welcome to the PA Unplugged community.</p>
+      </div>
+    </div>
+
+    <!-- Families Directory -->
+    <div class="families-section">
+      <h2>Unplugged Families</h2>
+      <p>Already signed? Find other families in your district.</p>
+      <div class="filter-row">
+        <select id="districtFilter" onchange="filterFamilies()">
+          <option value="">Select a District</option>
+        </select>
+        <select id="gradeFilter" onchange="filterFamilies()">
+          <option value="all">All Graduation Years</option>
+          <option value="2025">2025</option><option value="2026">2026</option>
+          <option value="2027">2027</option><option value="2028">2028</option>
+          <option value="2029">2029</option><option value="2030">2030</option>
+          <option value="2031">2031</option><option value="2032">2032</option>
+          <option value="2033">2033</option><option value="2034">2034</option>
+          <option value="2035">2035</option><option value="2036">2036</option>
+          <option value="2037">2037</option><option value="2038">2038</option>
+          <option value="2039">2039</option><option value="2040">2040</option>
+          <option value="2041">2041</option><option value="2042">2042</option>
+          <option value="2043">2043</option><option value="2044">2044</option>
+          <option value="2045">2045</option>
+        </select>
+      </div>
+      <div class="family-list" id="familyList">
+        <div class="families-loading" id="familiesLoading">Loading families...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="page-footer">
+    <a href="https://www.paunplugged.org" target="_blank">paunplugged.org</a> &nbsp;·&nbsp; Questions? <a href="mailto:hello@paunplugged.org">hello@paunplugged.org</a>
+  </footer>
+
+  <script>
+    // ── District data — all 67 PA counties ──────────────────────────────
+    var PA_DISTRICTS = {
+      'Adams':         ['Bermudian Springs','Conewago Valley','Fairfield Area','Gettysburg Area','Littlestown Area','Upper Adams'],
+      'Allegheny':     ['Allegheny Valley','Avonworth','Baldwin-Whitehall','Bethel Park','Brentwood Borough','Carlynton','Chartiers Valley','Clairton City','Cornell','Deer Lakes','Duquesne City','East Allegheny','Elizabeth Forward','Fox Chapel Area','Gateway','Hampton Township','Highlands','Keystone Oaks','McKeesport Area','Montour','Moon Area','Mt. Lebanon','North Allegheny','North Hills','Northgate','Penn Hills','Pine-Richland','Pittsburgh','Plum Borough','Quaker Valley','Riverview','South Allegheny','South Fayette Township','South Park','Steel Valley','Sto-Rox','Upper Saint Clair','West Allegheny','West Jefferson Hills','West Mifflin Area','Whitehall-Coraopolis','Woodland Hills'],
+      'Armstrong':     ['Apollo-Ridge','Armstrong','Burrell','Freeport Area','Kiski Area','Leechburg Area'],
+      'Beaver':        ['Aliquippa','Ambridge Area','Beaver Area','Big Beaver Falls Area','Blackhawk','Central Valley','Freedom Area','Hopewell Area','Midland Borough','New Brighton Area','Riverside Beaver County','Rochester Area','South Side Area','Western Beaver County'],
+      'Bedford':       ['Bedford Area','Berlin Brothersvalley','Chestnut Ridge','Everett Area','Tussey Mountain'],
+      'Berks':         ['Antietam','Brandywine Heights','Conrad Weiser','Daniel Boone','Exeter Township','Fleetwood','Governor Mifflin','Hamburg Area','Kutztown Area','Muhlenberg','Oley Valley','Reading','Schuylkill Valley','Tulpehocken Area','Twin Valley','Wilson','Wyomissing Area'],
+      'Blair':         ['Altoona Area','Bellwood-Antis','Claysburg-Kimmel','Hollidaysburg Area','Spring Cove','Tyrone Area'],
+      'Bradford':      ['Athens Area','Canton Area','Northeast Bradford','Sayre Area','Towanda Area','Troy Area','Wyalusing Area'],
+      'Bucks':         ['Bensalem Township','Bristol Borough','Bristol Township','Centennial','Central Bucks','Council Rock','Morrisville Borough','Neshaminy','New Hope-Solebury','Palisades','Pennridge','Pennsbury','Quakertown Community'],
+      'Butler':        ['Allegheny-Clarion Valley','Butler Area','Karns City Area','Mars Area','Moniteau','Seneca Valley','Slippery Rock Area','South Butler County'],
+      'Cambria':       ['Cambria Heights','Central Cambria','Forest Hills','Greater Johnstown','Penn Cambria','Portage Area','Richland','Westmont Hilltop'],
+      'Cameron':       ['Cameron County'],
+      'Carbon':        ['Jim Thorpe Area','Lehighton Area','Palmerton Area','Panther Valley','Weatherly Area'],
+      'Centre':        ['Bald Eagle Area','Bellefonte Area','Penns Valley Area','Philipsburg-Osceola Area','State College Area'],
+      'Chester':       ['Avon Grove','Coatesville Area','Downingtown Area','Great Valley','Kennett Consolidated','Oxford Area','Phoenixville Area','Tredyffrin/Easttown','Unionville-Chadds Ford','West Chester Area'],
+      'Clarion':       ['Clarion Area','Clarion-Limestone Area','Forest Area','Keystone','North Clarion County','Redbank Valley','Union'],
+      'Clearfield':    ['Clearfield Area','Curwensville Area','DuBois Area','Harmony Area','Moshannon Valley','West Branch Area'],
+      'Clinton':       ['Central Mountain','Keystone Central'],
+      'Columbia':      ['Benton Area','Berwick Area','Bloomsburg Area','Central Columbia','Millville Area','Southern Columbia Area'],
+      'Crawford':      ['Conneaut','Crawford Central','Maplewood','Penncrest','Titusville Area','Western Reserve'],
+      'Cumberland':    ['Big Spring','Camp Hill','Carlisle Area','Cumberland Valley','Mechanicsburg Area','Shippensburg Area','South Middleton','West Perry'],
+      'Dauphin':       ['Central Dauphin','Derry Township','Halifax Area','Lower Dauphin','Middletown Area','Millersburg Area','Steelton-Highspire','Susquehanna Township','Upper Dauphin Area'],
+      'Delaware':      ['Chichester','Garnet Valley','Haverford Township','Interboro','Marple Newtown','Penn-Delco','Radnor Township','Ridley','Rose Tree Media','Southeast Delco','Springfield','Upper Darby','Wallingford-Swarthmore','William Penn'],
+      'Elk':           ['Johnsonburg Area','Ridgway Area','Saint Marys Area'],
+      'Erie':          ['Corry Area','Erie City','Fairview','Fort LeBoeuf','General McLane','Girard','Harbor Creek','Iroquois','Millcreek Township','North East','Northwestern','Wattsburg Area'],
+      'Fayette':       ['Albert Gallatin','Connellsville Area','Frazier','Laurel Highlands','Uniontown Area'],
+      'Forest':        ['Forest Area'],
+      'Franklin':      ['Chambersburg Area','Fannett-Metal','Greencastle-Antrim','Tuscarora','Waynesboro Area'],
+      'Fulton':        ['Central Fulton','Forbes Road','Southern Fulton'],
+      'Greene':        ['Central Greene','Southeastern Greene','West Greene'],
+      'Huntingdon':    ['Huntingdon Area','Juniata Valley','Mount Union Area','Southern Huntingdon County'],
+      'Indiana':       ['Blairsville-Saltsburg','Homer-Center','Indiana Area','Marion Center Area','Penns Manor Area','Purchase Line'],
+      'Jefferson':     ['Brockway Area','Brookville Area','Punxsutawney Area','Reynolds'],
+      'Juniata':       ['Juniata County','Tuscarora'],
+      'Lackawanna':    ['Abington Heights','Carbondale Area','Dunmore','Lakeland','Mid Valley','North Pocono','Old Forge','Riverside','Scranton','Valley View'],
+      'Lancaster':     ['Columbia Borough','Conestoga Valley','Donegal','Eastern Lancaster County','Elizabethtown Area','Ephrata Area','Hempfield','Lampeter-Strasburg','Lancaster','Manheim Central','Manheim Township','Penn Manor','Pequea Valley','Solanco','Warwick'],
+      'Lawrence':      ['Ellwood City Area','Laurel','Neshannock Township','New Castle Area','Shenango Area','Union Area','Wilmington Area'],
+      'Lebanon':       ['Annville-Cleona','Cornwall-Lebanon','Eastern Lebanon County','Lebanon','Northern Lebanon','Palmyra Area'],
+      'Lehigh':        ['Allentown City','Catasauqua Area','East Penn','Northern Lehigh','Northwestern Lehigh','Parkland','Salisbury Township','Southern Lehigh','Whitehall-Coplay'],
+      'Luzerne':       ['Crestwood','Dallas','Hanover Area','Hazleton Area','Lake-Lehman','Nanticoke Area','Northwest Area','Pittston Area','Wilkes-Barre Area','Wyoming Area','Wyoming Valley West'],
+      'Lycoming':      ['East Lycoming','Jersey Shore Area','Loyalsock Township','Montoursville Area','Muncy','South Williamsport Area','Warrior Run','Williamsport Area'],
+      'McKean':        ['Bradford Area','Kane Area','Otto-Eldred','Port Allegany','Smethport Area'],
+      'Mercer':        ['Commodore Perry','Farrell Area','Greenville Area','Grove City Area','Hermitage','Reynolds','Sharon City','West Middlesex Area'],
+      'Mifflin':       ['Mifflin County'],
+      'Monroe':        ['East Stroudsburg','Pleasant Valley','Pocono Mountain','Stroudsburg'],
+      'Montgomery':    ['Abington','Cheltenham','Colonial','Hatboro-Horsham','Jenkintown','Lower Merion','Lower Moreland Township','Methacton','Norristown Area','North Penn','Perkiomen Valley','Pottsgrove','Pottstown','Souderton Area','Springfield Township','Upper Dublin','Upper Merion Area','Upper Moreland Township','Wissahickon'],
+      'Montour':       ['Danville Area'],
+      'Northampton':   ['Bangor Area','Bethlehem Area','Easton Area','Nazareth Area','Northampton Area','Pen Argyl Area','Saucon Valley','Wilson'],
+      'Northumberland':['Line Mountain','Mount Carmel Area','Shamokin Area','Shikellamy','Warrior Run'],
+      'Perry':         ['Greenwood','Newport','West Perry'],
+      'Philadelphia':  ['School District of Philadelphia'],
+      'Pike':          ['Delaware Valley','Wallenpaupack Area'],
+      'Potter':        ['Galeton Area','Northern Potter','Oswayo Valley'],
+      'Schuylkill':    ['Blue Mountain','Mahanoy Area','Minersville Area','North Schuylkill','Pottsville Area','Saint Clair Area','Schuylkill Haven Area','Shenandoah Valley','Tamaqua Area','Tri-Valley','Williams Valley'],
+      'Snyder':        ['Midd-West','Selinsgrove Area'],
+      'Somerset':      ['Berlin Brothersvalley','Conemaugh Township','Conemaugh Valley','North Star','Shade-Central City','Shanksville-Stonycreek','Somerset Area','Windber Area'],
+      'Sullivan':      ['Sullivan County'],
+      'Susquehanna':   ['Blue Ridge','Forest City Regional','Montrose Area','Mountain View','Susquehanna Community'],
+      'Tioga':         ['Cowanesque Valley','Mansfield Area','North Penn-Mansfield','Northern Tioga','Southern Tioga','Wellsboro Area'],
+      'Union':         ['Lewisburg Area','Mifflinburg Area'],
+      'Venango':       ['Cranberry Area','Franklin Area','Oil City Area','Valley Grove'],
+      'Warren':        ['Eisenhower','Warren County','Youngsville'],
+      'Washington':    ['Bentworth','Beth-Center','Burgettstown Area','California Area','Canon-McMillan','Charleroi Area','Fort Cherry','McGuffey','Ringgold','Trinity Area','Washington'],
+      'Wayne':         ['Delaware Valley','Honesdale Area','Wallenpaupack Area'],
+      'Westmoreland':  ['Derry Area','Franklin Regional','Greater Latrobe','Greensburg Salem','Hempfield Area','Jeannette City','Ligonier Valley','Mt. Pleasant Area','Norwin','Penn-Trafford','Southmoreland','Yough'],
+      'Wyoming':       ['Elk Lake','Lackawanna Trail','Tunkhannock Area'],
+      'York':          ['Central York','Dallastown Area','Dover Area','Eastern York','Hanover Public','Northeastern York','Northern York County','Red Lion Area','South Eastern','South Western','Spring Grove Area','West York Area','York City','York Suburban']
+    };
+
+    var SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwERe9IlBqYO1xCxkCJXET23Gu4WosBqu1RQoNJDm8Nn5_8W3awfpUu8dsbVlEivsz-/exec';
+    var SHEETS_KEY   = 'AIzaSyDmPvagKEGJc9wdprbVgrkwp34Gq0-fweM';
+    var SPREADSHEET  = '1w4ogCUwVc15lYZxOeUPA--y7LPnW8T6h5u_2-624B9I';
+
+    var childCount = 0;
+    var allFamilies = [];
+
+    // ── Build a child entry ──────────────────────────────────────────────
+    function addChild() {
+      childCount++;
+      var n = childCount;
+      var isRequired = !document.getElementById('supporter').checked;
+
+      var entry = document.createElement('div');
+      entry.className = 'child-entry';
+      entry.id = 'child-' + n;
+
+      // Year options
+      var yearOpts = '<option value="">Select year</option>';
+      for (var y = 2025; y <= 2045; y++) yearOpts += '<option value="' + y + '">' + y + '</option>';
+
+      // County options
+      var countyOpts = '<option value="">Select county</option>';
+      Object.keys(PA_DISTRICTS).sort().forEach(function(c) {
+        countyOpts += '<option value="' + c + '">' + c + ' County</option>';
+      });
+
+      entry.innerHTML =
+        '<div class="child-header">' +
+          '<h4>Child ' + (document.getElementById('childrenContainer').children.length + 1) + '</h4>' +
+          (n > 1 ? '<button type="button" class="remove-child" onclick="removeChild(' + n + ')">Remove</button>' : '<span></span>') +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>Graduation Year</label>' +
+          '<select id="year-' + n + '" name="graduationYear[]"' + (isRequired ? ' required' : '') + '>' + yearOpts + '</select>' +
+        '</div>' +
+        '<div class="county-district-row">' +
+          '<div class="form-group">' +
+            '<label>County</label>' +
+            '<select id="county-' + n + '" name="county[]"' + (isRequired ? ' required' : '') + '>' + countyOpts + '</select>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>School District</label>' +
+            '<select id="district-' + n + '" name="district[]"' + (isRequired ? ' required' : '') + ' disabled>' +
+              '<option value="">Select district</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>';
+
+      document.getElementById('childrenContainer').appendChild(entry);
+
+      // Attach county change handler directly — no DOM traversal needed
+      var countyEl   = document.getElementById('county-' + n);
+      var districtEl = document.getElementById('district-' + n);
+      countyEl.addEventListener('change', function() {
+        populateDistricts(countyEl, districtEl);
+      });
+    }
+
+    function removeChild(n) {
+      var el = document.getElementById('child-' + n);
+      if (el) el.remove();
+      // Renumber headings
+      var entries = document.querySelectorAll('#childrenContainer .child-entry');
+      entries.forEach(function(e, i) {
+        var h = e.querySelector('h4');
+        if (h) h.textContent = 'Child ' + (i + 1);
+      });
+    }
+
+    function populateDistricts(countyEl, districtEl) {
+      var county = countyEl.value;
+      districtEl.innerHTML = '<option value="">Select district</option>';
+      if (county && PA_DISTRICTS[county]) {
+        PA_DISTRICTS[county].forEach(function(d) {
+          var opt = document.createElement('option');
+          opt.value = d; opt.textContent = d;
+          districtEl.appendChild(opt);
+        });
+        districtEl.disabled = false;
+      } else {
+        districtEl.disabled = true;
+      }
+    }
+
+    function toggleSupporter() {
+      var isSupporter = document.getElementById('supporter').checked;
+      var section = document.getElementById('childrenSection');
+      section.style.opacity = isSupporter ? '0.5' : '1';
+      section.querySelectorAll('select').forEach(function(s) {
+        isSupporter ? s.removeAttribute('required') : s.setAttribute('required', 'required');
+      });
+    }
+
+    // ── Form submission ──────────────────────────────────────────────────
+    function submitCommitment() {
+      var form = document.getElementById('commitmentForm');
+
+      // Basic validation
+      var parentName = document.getElementById('parentName').value.trim();
+      var email      = document.getElementById('email').value.trim();
+      var publicName = form.querySelector('input[name="publicName"]:checked');
+      var emailList  = form.querySelector('input[name="emailList"]:checked');
+
+      if (!parentName) { alert('Please enter your name.'); return; }
+      if (!email)      { alert('Please enter your email.'); return; }
+      if (!publicName) { alert('Please answer the name visibility question.'); return; }
+      if (!emailList)  { alert('Please answer the email list question.'); return; }
+
+      var isSupporter = document.getElementById('supporter').checked;
+      var children = [];
+      document.querySelectorAll('#childrenContainer .child-entry').forEach(function(entry) {
+        var id = entry.id.replace('child-', '');
+        var year     = document.getElementById('year-' + id);
+        var county   = document.getElementById('county-' + id);
+        var district = document.getElementById('district-' + id);
+        if (year && county && district) {
+          if (!isSupporter && (!year.value || !county.value || !district.value)) {
+            alert('Please complete all fields for each child.');
+            throw new Error('incomplete');
+          }
+          if (year.value && county.value && district.value) {
+            children.push({ graduationYear: year.value, county: county.value, district: district.value });
+          }
+        }
+      });
+
+      if (!isSupporter && children.length === 0) {
+        alert('Please add at least one child, or check the Supporter box.');
+        return;
+      }
+
+      var btn = document.querySelector('.btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var payload = {
+        parentName: parentName,
+        email:      email,
+        supporter:  isSupporter ? 'yes' : '',
+        publicName: publicName.value,
+        emailList:  emailList.value,
+        comments:   document.getElementById('comments').value,
+        timestamp:  new Date().toISOString(),
+        children:   JSON.stringify(children)
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(payload).toString()
+      }).then(function() {
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      }).catch(function(err) {
+        console.error(err);
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Sign the Commitment';
+      });
+    }
+
+    // ── Families directory ───────────────────────────────────────────────
+    function buildDistrictFilter() {
+      var el = document.getElementById('districtFilter');
+      Object.keys(PA_DISTRICTS).sort().forEach(function(county) {
+        var group = document.createElement('optgroup');
+        group.label = county + ' County';
+        PA_DISTRICTS[county].forEach(function(d) {
+          var opt = document.createElement('option');
+          opt.value = d; opt.textContent = d;
+          group.appendChild(opt);
+        });
+        el.appendChild(group);
+      });
+    }
+
+    function filterFamilies() {
+      var district = document.getElementById('districtFilter').value;
+      var year     = document.getElementById('gradeFilter').value;
+      var list     = document.getElementById('familyList');
+
+      if (!district) {
+        list.innerHTML = '<div class="families-prompt">Select a district above to see families in your area.</div>';
+        return;
+      }
+
+      var matches = allFamilies.filter(function(f) {
+        var hasDistrict = f.children.some(function(c) { return c.district === district; });
+        var hasYear     = year === 'all' || f.children.some(function(c) { return String(c.graduationYear) === year; });
+        return hasDistrict && hasYear;
+      });
+
+      if (matches.length === 0) {
+        list.innerHTML = '<div class="families-prompt">No families found for this selection yet.</div>';
+        return;
+      }
+
+      list.innerHTML = matches.map(function(f) {
+        var detail = f.children
+          .filter(function(c) { return c.district === district; })
+          .map(function(c) { return 'Class of ' + c.graduationYear; })
+          .join(', ');
+        return '<div class="family-row">' +
+          '<div class="family-name">' + escapeHtml(f.name) + '</div>' +
+          '<div class="family-detail">' + escapeHtml(district) + ' · ' + detail + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function loadFamilies() {
+      fetch('https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET + '/values/Responses!A:Z?key=' + SHEETS_KEY)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.values || data.values.length < 2) {
+            document.getElementById('familiesLoading').textContent = 'No family data yet.';
+            return;
+          }
+          var headers = data.values[0];
+          var rows    = data.values.slice(1);
+          allFamilies = processFamilies(headers, rows);
+          document.getElementById('familiesLoading').remove();
+          filterFamilies();
+        })
+        .catch(function() {
+          document.getElementById('familiesLoading').textContent = 'Could not load families data.';
+        });
+    }
+
+    function processFamilies(headers, rows) {
+      var nameIdx     = headers.findIndex(function(h) { return /parent.*name/i.test(h); });
+      var publicIdx   = headers.findIndex(function(h) { return /public name/i.test(h); });
+      var childrenIdx = headers.findIndex(function(h) { return /children/i.test(h); });
+
+      var map = new Map(), anon = [], anonCount = 0;
+      rows.forEach(function(row) {
+        if (!row[nameIdx] || !row[nameIdx].trim()) return;
+        var name     = row[nameIdx].trim();
+        var isPublic = publicIdx === -1 || (row[publicIdx] || '').toLowerCase() !== 'no';
+        var children = [];
+        try { children = JSON.parse(row[childrenIdx] || '[]'); } catch(e) {}
+
+        if (isPublic) {
+          if (!map.has(name)) map.set(name, { name: name, children: [] });
+          children.forEach(function(c) { map.get(name).children.push(c); });
+        } else {
+          anonCount++;
+          anon.push({ name: 'Anonymous Family', children: children });
+        }
+      });
+
+      return Array.from(map.values())
+        .concat(anon)
+        .sort(function(a,b) { return a.name.localeCompare(b.name); });
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      buildDistrictFilter();
+      addChild(); // Start with one child
+      loadFamilies();
+    });
+  </script>
+
+</body>
+</html>
