@@ -753,8 +753,12 @@
 
     function processFamilies(headers, rows) {
       var nameIdx     = headers.findIndex(function(h) { return /parent.*name/i.test(h); });
-      var publicIdx   = headers.findIndex(function(h) { return /public name/i.test(h); });
-      var childrenIdx = headers.findIndex(function(h) { return /children/i.test(h); });
+      var publicIdx   = headers.findIndex(function(h) { return /public.?name/i.test(h); });
+      // New format: children stored as JSON array in one column
+      var childrenIdx = headers.findIndex(function(h) { return /^children$/i.test(h); });
+      // Old format: district and year stored in separate columns
+      var districtIdx = headers.findIndex(function(h) { return /district/i.test(h); });
+      var yearIdx     = headers.findIndex(function(h) { return /grad/i.test(h); });
 
       var map = new Map(), anon = [], anonCount = 0;
       rows.forEach(function(row) {
@@ -762,7 +766,17 @@
         var name     = row[nameIdx].trim();
         var isPublic = publicIdx === -1 || (row[publicIdx] || '').toLowerCase() !== 'no';
         var children = [];
-        try { children = JSON.parse(row[childrenIdx] || '[]'); } catch(e) {}
+
+        var childrenCell = childrenIdx !== -1 ? (row[childrenIdx] || '') : '';
+        if (childrenCell.trim().charAt(0) === '[') {
+          // New format: JSON children array
+          try { children = JSON.parse(childrenCell); } catch(e) {}
+        } else if (districtIdx !== -1) {
+          // Old format: separate district/year columns
+          var district = (row[districtIdx] || '').trim();
+          var year     = yearIdx !== -1 ? (row[yearIdx] || '').trim() : '';
+          if (district) children = [{ district: district, graduationYear: year }];
+        }
 
         if (isPublic) {
           if (!map.has(name)) map.set(name, { name: name, children: [] });
