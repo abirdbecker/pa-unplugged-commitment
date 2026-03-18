@@ -30,12 +30,13 @@
       gap: 1.5rem;
     }
     .header-logo-link {
-      flex-shrink: 0;
+      flex: 0 0 120px;
     }
     .header-center {
       flex: 1;
       text-align: center;
     }
+
     .page-header h1 {
       font-size: clamp(1.4rem, 3.5vw, 2rem);
       font-weight: 700;
@@ -94,6 +95,7 @@
     }
     /* Family count badge */
     .family-count-badge {
+      flex: 0 0 120px;
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.3);
       border-radius: 8px;
@@ -103,7 +105,6 @@
       font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.2;
-      min-width: 80px;
     }
     .family-count-badge::after {
       content: 'families signed';
