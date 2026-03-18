@@ -515,9 +515,6 @@
       'York':          ['Central York','Dallastown Area','Dover Area','Eastern York','Hanover Public','Northeastern York','Northern York County','Red Lion Area','South Eastern','South Western','Spring Grove Area','West York Area','York City','York Suburban']
     };
 
-    var SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwERe9IlBqYO1xCxkCJXET23Gu4WosBqu1RQoNJDm8Nn5_8W3awfpUu8dsbVlEivsz-/exec';
-    var SHEETS_KEY   = 'AIzaSyDmPvagKEGJc9wdprbVgrkwp34Gq0-fweM';
-    var SPREADSHEET  = '1sDRDh9ZFQ6bhDp_wEJGczd-qvG01uYYE';
 
     var childCount = 0;
     var allFamilies = [];
@@ -662,10 +659,10 @@
         children:   JSON.stringify(children)
       };
 
-      fetch(SCRIPT_URL, {
+      fetch('/api/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(payload).toString()
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       }).then(function() {
         form.style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
@@ -732,17 +729,10 @@
     }
 
     function loadFamilies() {
-      // Use CSV export — works from any domain, no API key or referrer restrictions needed
-      var url = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET + '/gviz/tq?tqx=out:csv&sheet=Responses';
-      fetch(url)
-        .then(function(r) { return r.text(); })
-        .then(function(csv) {
-          var rows = parseCSV(csv);
-          if (rows.length < 2) {
-            document.getElementById('familiesLoading').textContent = 'No family data yet.';
-            return;
-          }
-          allFamilies = processFamilies(rows[0], rows.slice(1));
+      fetch('/families.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          allFamilies = data;
           document.getElementById('familiesLoading').remove();
           buildDistrictFilter(allFamilies);
           filterFamilies();
