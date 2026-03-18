@@ -87,12 +87,19 @@
       line-height: 1.5;
     }
 
+    /* Header top row */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .header-logo {
+      height: 48px;
+      width: auto;
+    }
     /* Family count badge */
-    .page-header { position: relative; }
     .family-count-badge {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.5rem;
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.3);
       border-radius: 8px;
@@ -102,6 +109,7 @@
       font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.2;
+      min-width: 80px;
     }
     .family-count-badge::after {
       content: 'families signed';
@@ -346,10 +354,14 @@
 <body>
 
   <header class="page-header">
-    <div class="logo">PA Unplugged</div>
+    <div class="header-top">
+      <a href="https://paunplugged.org" target="_blank" rel="noopener">
+        <img src="/logo.png" alt="PA Unplugged" class="header-logo" />
+      </a>
+      <div class="family-count-badge" id="familyCount"></div>
+    </div>
     <h1>Sign the Commitment</h1>
     <p>Join us in reclaiming childhood.</p>
-    <div class="family-count-badge" id="familyCount"></div>
   </header>
 
   <div class="page-body">
