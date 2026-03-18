@@ -87,12 +87,30 @@
       line-height: 1.5;
     }
 
-    /* Family count */
-    .family-count {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      margin-top: 0.75rem;
+    /* Family count badge */
+    .page-header { position: relative; }
+    .family-count-badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      padding: 0.5rem 0.85rem;
+      text-align: center;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .family-count-badge::after {
+      content: 'families signed';
+      display: block;
+      font-size: 0.65rem;
       font-weight: 400;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     /* Form card */
@@ -330,8 +348,8 @@
   <header class="page-header">
     <div class="logo">PA Unplugged</div>
     <h1>Sign the Commitment</h1>
-    <p>Join hundreds of families across Pennsylvania in reclaiming childhood.</p>
-    <div class="family-count" id="familyCount"></div>
+    <p>Join us in reclaiming childhood.</p>
+    <div class="family-count-badge" id="familyCount"></div>
   </header>
 
   <div class="page-body">
@@ -746,7 +764,7 @@
           buildDistrictFilter(allFamilies);
           filterFamilies();
           var countEl = document.getElementById('familyCount');
-          if (countEl) countEl.textContent = allFamilies.length + ' families have signed the commitment.';
+          if (countEl) countEl.textContent = allFamilies.length;
         })
         .catch(function() {
           document.getElementById('familiesLoading').textContent = 'Could not load families data.';
