@@ -87,6 +87,15 @@
       line-height: 1.5;
     }
 
+    /* Family count */
+    .family-count {
+      text-align: center;
+      font-size: 1rem;
+      color: #385F25;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
     /* Form card */
     .form-card {
       background: white;
@@ -338,6 +347,8 @@
         <li>As stakeholders in our community, we support free-roam childhoods and encourage screen-free experiences in our communities.</li>
       </ul>
     </div>
+
+    <div class="family-count" id="familyCount"></div>
 
     <div class="form-card">
       <form id="commitmentForm">
@@ -736,6 +747,8 @@
           document.getElementById('familiesLoading').remove();
           buildDistrictFilter(allFamilies);
           filterFamilies();
+          var countEl = document.getElementById('familyCount');
+          if (countEl) countEl.textContent = allFamilies.length + ' families have signed the commitment.';
         })
         .catch(function() {
           document.getElementById('familiesLoading').textContent = 'Could not load families data.';
