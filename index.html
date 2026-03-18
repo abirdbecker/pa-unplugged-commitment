@@ -22,6 +22,19 @@
     }
 
     /* Header */
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      text-decoration: none;
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+    .home-link:hover { opacity: 1; }
     .page-header {
       background: #385F25;
       color: white;
@@ -29,9 +42,12 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      position: relative;
     }
     .header-logo-link {
-      flex: 0 0 120px;
+      display: inline-flex;
+      vertical-align: middle;
+      margin-right: 0.5rem;
     }
     .header-center {
       flex: 1;
@@ -350,11 +366,16 @@
 <body>
 
   <header class="page-header">
-    <a href="https://paunplugged.org" target="_blank" rel="noopener" class="header-logo-link">
-      <img src="/logo.png" alt="PA Unplugged" class="header-logo" />
+    <a href="https://paunplugged.org" class="home-link" title="PA Unplugged Home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg>
     </a>
     <div class="header-center">
-      <h1>Sign the Commitment</h1>
+      <h1>
+        <a href="https://paunplugged.org" target="_blank" rel="noopener" class="header-logo-link">
+          <img src="/logo.png" alt="PA Unplugged" class="header-logo" />
+        </a>
+        Sign the Commitment
+      </h1>
       <p>Join us in reclaiming childhood.</p>
     </div>
     <div class="family-count-badge" id="familyCount"></div>
