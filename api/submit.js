@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const FILE_PATH    = 'families.json';
   const API_BASE     = 'https://api.github.com';
   const MC_LIST_ID   = '66491fade8';
-  const MC_DC        = 'us20';
+  const MC_DC        = 'us9';
 
   try {
     const body = req.body;
