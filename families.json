@@ -1,5 +1,5 @@
 {
-  "totalCount": 178,
+  "totalCount": 176,
   "families": [
     {
       "name": "Alicia Krueger",
@@ -1668,26 +1668,6 @@
           "graduationYear": "2035",
           "county": "Allegheny",
           "district": "Quaker Valley"
-        }
-      ]
-    },
-    {
-      "name": "Test McTest",
-      "children": [
-        {
-          "graduationYear": "2029",
-          "county": "Armstrong",
-          "district": "Burrell"
-        }
-      ]
-    },
-    {
-      "name": "Testy",
-      "children": [
-        {
-          "graduationYear": "2035",
-          "county": "Blair",
-          "district": "Spring Cove"
         }
       ]
     },
