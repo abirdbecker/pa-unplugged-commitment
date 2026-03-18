@@ -97,6 +97,7 @@
     .header-logo {
       height: 48px;
       width: auto;
+      filter: brightness(0) invert(1);
     }
     /* Family count badge */
     .family-count-badge {
@@ -771,12 +772,13 @@
       fetch('/families.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          allFamilies = data;
+          allFamilies = data.families || data;
+          var totalCount = data.totalCount || allFamilies.length;
           document.getElementById('familiesLoading').remove();
           buildDistrictFilter(allFamilies);
           filterFamilies();
           var countEl = document.getElementById('familyCount');
-          if (countEl) countEl.textContent = allFamilies.length;
+          if (countEl) countEl.textContent = totalCount;
         })
         .catch(function() {
           document.getElementById('familiesLoading').textContent = 'Could not load families data.';
