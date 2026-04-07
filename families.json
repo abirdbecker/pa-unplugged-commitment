@@ -1,5 +1,5 @@
 {
-  "totalCount": 178,
+  "totalCount": 179,
   "families": [
     {
       "name": "Alicia Krueger",
@@ -1615,6 +1615,22 @@
           "district": "Quaker Valley"
         }
       ]
+    },
+    {
+      "name": "Stephanie Frederick",
+      "children": [
+        {
+          "graduationYear": "2038",
+          "county": "Bucks",
+          "district": "Pennridge"
+        },
+        {
+          "graduationYear": "2041",
+          "county": "Bucks",
+          "district": "Pennridge"
+        }
+      ],
+      "email": "sbaunach34@gmail.com"
     },
     {
       "name": "Stephanie Rosenheck",
