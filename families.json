@@ -1,5 +1,5 @@
 {
-  "totalCount": 183,
+  "totalCount": 184,
   "families": [
     {
       "name": "Alicia Krueger",
@@ -1684,6 +1684,16 @@
           "graduationYear": "2038",
           "county": "Allegheny",
           "district": "Quaker Valley"
+        }
+      ]
+    },
+    {
+      "name": "Stephen Miller",
+      "children": [
+        {
+          "graduationYear": "2030",
+          "county": "Beaver",
+          "district": "Beaver Area"
         }
       ]
     },
