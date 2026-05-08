@@ -1,5 +1,5 @@
 {
-  "totalCount": 185,
+  "totalCount": 186,
   "families": [
     {
       "name": "Alicia Krueger",
@@ -849,6 +849,16 @@
           "graduationYear": "2038",
           "county": "Allegheny",
           "district": "The Village Preschool"
+        }
+      ]
+    },
+    {
+      "name": "Katherine Habr",
+      "children": [
+        {
+          "graduationYear": "2031",
+          "county": "Allegheny",
+          "district": "North Allegheny"
         }
       ]
     },
